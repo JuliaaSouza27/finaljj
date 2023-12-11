@@ -1,213 +1,216 @@
-const Usuario = require('../models/Usuario')
-const Paciente = require('../models/Paciente')
-const Consulta = require('../models/Consulta')
+const Eleitor = require("../models/Eleitor");
+const vaga = require("../models/vaga");
+const eleicao = require("../models/eleicao");
 
-function abreindex(req,res){
-    res.render('index')
+function abreindex(req, res) {
+  res.render("index");
 }
 
-function abreadd(req,res){
-    res.render('add')
+function abreeleitor(req, res) {
+  res.render("addeleitor");
 }
 
-function add(req,res){
-    let nome = req.body.nome
-    let email = req.body.email
-    let senha = req.body.senha
-    let foto = req.file.filename
+function addeleitor(req, res) {
+  let nome = req.body.nome;
+  let titulo = req.body.titulo;
+  let cpf = req.body.cpf;
+  let filiacao = req.body.filiacao;
+  let end = req.body.end;
+  let datanasc = req.body.datanasc;
 
-    let usuario = new Usuario({
-        nome: nome,
-        email: email,
-        senha: senha,
-        foto: foto
+  let eleitor = new Eleitor({
+    nome: nome,
+    titulo: titulo,
+    cpf: cpf,
+    filiacao: filiacao,
+    end: end,
+    datanasc: datanasc,
+  });
+
+  eleitor.save().then(function (docs) {
+    res.send("Salvo");
+  });
+}
+
+function listar(req, res) {
+  Eleitor.find({}).then(function (eleitores) {
+    res.render("lsteleitor.ejs", { Eleitores: eleitores });
+  });
+}
+
+function abreaddvaga(req, res) {
+  res.render("addvaga.ejs");
+}
+
+function addvaga(req, res) {
+  let v = new vaga({
+    nmrvaga: req.body.nmrvaga,
+    presidente: req.body.presidente,
+    governador: req.body.governador,
+    senador: req.body.senador,
+    depfed: req.body.depfed,
+    depestad: req.body.depestad,
+  });
+  v.save().then(function (docs, err) {
+    console.log(docs);
+    res.redirect("/addvaga");
+  });
+}
+
+function lstvaga(req, res) {
+  vaga.find({}).then(function (vaga, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("lstvaga.ejs", { vaga: vaga });
+    }
+  });
+}
+
+function pesquisavaga(req, res) {
+  vaga
+    .find({ nome: new RegExp(req.body.pesquisar, "i") })
+    .then(function (vaga, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.render("lstvaga.ejs", { vaga: vaga });
+      }
+    });
+}
+
+function abreedtvaga(req, res) {
+  vaga.findById(req.params.id).then(function (vaga, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("edtvaga.ejs", { vaga: vaga });
+    }
+  });
+}
+
+function edtvaga(req, res) {
+  vaga
+    .findByIdAndUpdate(req.params.id, {
+      nmrvaga: req.body.nmrvaga,
+      presidente: req.body.presidente,
+      governador: req.body.governador,
+      senador: req.body.senador,
+      depfed: req.body.depfed,
+      depestad: req.body.depestad,
     })
+    .then(function (vaga, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.redirect("/lstvaga");
+      }
+    });
+}
 
-    usuario.save().then(function(docs){
-        res.send("Salvo")
+function delvaga(req, res) {
+  vaga.findByIdAndDelete(req.params.id).then(function (vaga, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.redirect("/lstvaga");
+    }
+  });
+}
+
+function abreaddeleicao(req, res) {
+  eleicao.find({}).then(function (eleicao, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("addeleicao.ejs", { eleicao: eleicao });
+    }
+  });
+}
+
+function addeleicao(req, res) {
+  let eleicao = new eleicao({
+    eleicano: req.body.eleicano,
+  });
+  eleicao.save().then(function (docs, err) {
+    console.log(docs);
+    res.redirect("/addeleicao");
+  });
+}
+
+function lsteleicao(req, res) {
+  eleicao.find({}).then(function (eleicao, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("lsteleicao.ejs", { eleicao: eleicao });
+    }
+  });
+}
+
+function pesquisaeleicao(req, res) {
+  eleicao
+    .find({ eleicano: new RegExp(req.body.pesquisar, "i") })
+    .then(function (eleicao, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.render("lsteleicao.ejs", { eleicao: eleicao });
+      }
+    });
+}
+
+function abreedteleicao(req, res) {
+  eleicao.findById(req.params.id).then(function (eleicao, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("edteleicao.ejs", { eleicao: eleicao });
+    }
+  });
+}
+
+function edteleicao(req, res) {
+  eleicao
+    .findByIdAndUpdate(req.params.id, {
+      eleicano: req.body.eleicano,
     })
+    .then(function (eleicao, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.redirect("/lsteleicao");
+      }
+    });
 }
 
-function listar(req,res){
-    Usuario.find({}).then(function(usuarios){
-        res.render('lst.ejs',{Usuarios:usuarios})
-    })    
-}
-
-function abreaddpaciente(req,res){
-    res.render('addpaciente.ejs')
-}
-
-function addpaciente(req,res){
-    
-    let paciente = new Paciente({
-        nome: req.body.nome,
-        endereco: req.body.endereco,
-        datanasc: req.body.datanasc,
-        sintomas: req.body.sintomas
-    })
-    paciente.save().then(function(docs,err){
-        console.log(docs)
-        res.redirect('/addpaciente')
-    })
-}
-
-function lstpaciente(req,res){
-    Paciente.find({}).then(function(pacientes,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('lstpaciente.ejs',{Pacientes:pacientes})
-        }
-    })
-}
-
-function pesquisapaciente(req,res){
-    Paciente.find({nome: new RegExp(req.body.pesquisar, "i")}).then(function(pacientes,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('lstpaciente.ejs',{Pacientes:pacientes})
-        }
-    })
-}
-
-
-function abreedtpaciente(req,res){
-    Paciente.findById(req.params.id).then(function(paciente,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('edtpaciente.ejs',{Paciente:paciente})
-        }
-    })
-}
-
-function edtpaciente(req,res){
-    Paciente.findByIdAndUpdate(req.params.id, {
-        nome: req.body.nome,
-        endereco: req.body.endereco,
-        datanasc: req.body.datanasc,
-        sintomas: req.body.sintomas
-    }).then(function(paciente,err){
-        if(err){
-            res.send(err.message);
-        }else{
-            res.redirect('/lstpaciente');
-        }
-    })
-}
-
-function delpaciente(req,res){
-    Paciente.findByIdAndDelete(req.params.id)
-        .then(function(paciente,err){
-            if(err){
-                res.send(err.message);
-            }else{
-                res.redirect('/lstpaciente')
-            }
-        })
-}
-
-function abreaddconsulta(req,res){
-    Paciente.find({}).then(function(pacientes,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('addconsulta.ejs',{Pacientes:pacientes})
-        }
-    })
-}
-
-function addconsulta(req,res){
-    
-    let consulta = new Consulta({
-        sintomas: req.body.sintomas,
-        diagnostico: req.body.diagnostico,
-        receita: req.body.receita,
-        data: new Date(),
-        paciente: req.body.paciente
-    })
-    consulta.save().then(function(docs,err){
-        console.log(docs)
-        res.redirect('/addconsulta')
-    })
-}
-
-function lstconsulta(req,res){
-    Consulta.find({}).populate('paciente').then(function(consultas,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('lstconsulta.ejs',{Consultas:consultas})
-        }
-    })
-}
-
-function pesquisaconsulta(req,res){
-    Paciente.find({nome: new RegExp(req.body.pesquisar, "i")}).then(function(pacientes,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('lstpaciente.ejs',{Pacientes:pacientes})
-        }
-    })
-}
-
-
-function abreedtconsulta(req,res){
-    Paciente.findById(req.params.id).then(function(paciente,err){
-        if(err){
-            res.send(err.message)
-        }else{
-            res.render('edtpaciente.ejs',{Paciente:paciente})
-        }
-    })
-}
-
-function edtconsulta(req,res){
-    Paciente.findByIdAndUpdate(req.params.id, {
-        nome: req.body.nome,
-        endereco: req.body.endereco,
-        datanasc: req.body.datanasc,
-        sintomas: req.body.sintomas
-    }).then(function(paciente,err){
-        if(err){
-            res.send(err.message);
-        }else{
-            res.redirect('/lstpaciente');
-        }
-    })
-}
-
-function delconsulta(req,res){
-    Paciente.findByIdAndDelete(req.params.id)
-        .then(function(paciente,err){
-            if(err){
-                res.send(err.message);
-            }else{
-                res.redirect('/lstpaciente')
-            }
-        })
+function deleleicao(req, res) {
+  eleicao.findByIdAndDelete(req.params.id).then(function (eleicao, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.redirect("/lsteleicao");
+    }
+  });
 }
 
 module.exports = {
-    abreindex,
-    abreadd,
-    add,
-    listar,
-    abreaddpaciente,
-    addpaciente,
-    lstpaciente,
-    pesquisapaciente,
-    delpaciente,
-    abreedtpaciente,
-    edtpaciente,
-    abreaddconsulta,
-    addconsulta,
-    lstconsulta,
-    pesquisaconsulta,
-    delconsulta,
-    abreedtconsulta,
-    edtconsulta
-}
+  abreindex,
+  abreeleitor,
+  addeleitor,
+  listar,
+  abreaddvaga,
+  addvaga,
+  lstvaga,
+  pesquisavaga,
+  delvaga,
+  abreedtvaga,
+  edtvaga,
+  abreaddeleicao,
+  addeleicao,
+  lsteleicao,
+  pesquisaeleicao,
+  deleleicao,
+  abreedteleicao,
+  edteleicao,
+};

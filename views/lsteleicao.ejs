@@ -8,20 +8,16 @@
 
 <table>
     <tr>
-        <th>Data e Hora</th>
-        <th>Paciente</th>
-        <th>Diagnóstico</th>
+        <th>Ano da Eleição</th>
         <th>Editar</th>
         <th>Delete</th>
     </tr>
 
-    <%Consultas.forEach(function(consulta){%>
+    <%eleicao.forEach(function(eleicao){%>
     <tr>
-        <td><%=moment(consulta.data).format('DD/MM/YYYY HH:mm') %></td>
-        <td><%=consulta.paciente.nome%></td>
-        <td><%=consulta.diagnostico%></td>
-        <td><a href="/edtconsulta/<%=consulta._id%>">Editar</a></td>
-        <td><a href="/delconsulta/<%=consulta._id%>">Delete</a></td>
+        <td><%=eleicao.eleicano%></td>
+        <td><a href="/edteleicao/<%=eleicao._id%>">Editar</a></td>
+        <td><a href="/deleleicao/<%=eleicao._id%>">Delete</a></td>
     </tr>
     <% }) %>
 </table>

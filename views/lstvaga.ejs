@@ -8,22 +8,26 @@
 
 <table>
     <tr>
-        <th>Nome</th>
-        <th>Endereço</th>
-        <th>Data de Nascimento</th>
-        <th>Sintomas</th>
+        <th>Número Vaga</th>
+        <th>Presidente</th>
+        <th>Governador</th>
+        <th>Senador</th>
+        <th>Deputado Federal </th>
+        <th>Deputado Estadual</th>
         <th>Editar</th>
         <th>Delete</th>
     </tr>
 
-    <%Pacientes.forEach(function(paciente){%>
+    <%vaga.forEach(function(vaga){%>
     <tr>
-        <td><%=paciente.nome%></td>
-        <td><%=paciente.endereco%></td>
-        <td><%=paciente.datanasc%></td>
-        <td><%=paciente.sintomas%></td>
-        <td><a href="/edtpaciente/<%=paciente._id%>">Editar</a></td>
-        <td><a href="/delpaciente/<%=paciente._id%>">Delete</a></td>
+        <td><%=vaga.nmrvaga%></td>
+        <td><%=vaga.presidente%></td>
+        <td><%=vaga.governador%></td>
+        <td><%=vaga.senador%></td>
+        <td><%=vaga.depfed%></td>
+        <td><%=vaga.depestad%></td>
+        <td><a href="/edtvaga/<%=vaga._id%>">Editar</a></td>
+        <td><a href="/delvaga/<%=vaga._id%>">Delete</a></td>
     </tr>
     <% }) %>
 </table>

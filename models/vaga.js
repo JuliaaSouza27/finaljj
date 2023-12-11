@@ -1,13 +1,12 @@
-const conexao = require('../config/conexao.js')
+const conexao = require("../config/conexao.js");
 
-const PacienteSchema = new conexao.Schema({
-    nome: String,
-    endereco: String,
-    datanasc: Date,
-    consultas: [{
-        type: conexao.Schema.Types.ObjectId,
-        ref: 'Consulta'
-    }]
-})
+const vagaSchema = new conexao.Schema({
+  nmrvaga: String,
+  presidente: String,
+  governador: String,
+  senador: String,
+  depfed: String,
+  depestad: String,
+});
 
-module.exports = conexao.model('Paciente',PacienteSchema)
+module.exports = conexao.model("vaga", vagaSchema);

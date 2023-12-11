@@ -1,43 +1,39 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/controller');
-const multer = require('multer');
-const upload = multer({ dest: './public' })
+const controller = require("../controllers/controller");
+const multer = require("multer");
+const upload = multer({ dest: "./public" });
 
-
-router.get('/',controller.abreindex)
+router.get("/", controller.abreindex);
 
 //rota para abrir formulário de adicionar
-router.get('/add',controller.abreadd)
+router.get("/addeleitor", controller.abreeleitor);
 
 //rota para receber dados do formulário e adicionar ao banco mongodb
-router.post('/add', upload.single('foto'), controller.add)
+router.post("/addeleitor", upload.single("foto"), controller.addeleitor);
 
-router.get('/lst',controller.listar)
+router.get("/lsteleitor", controller.listar);
 
+router.get("/addvaga", controller.abreaddvaga);
+router.post("/addvaga", controller.addvaga);
 
+router.get("/lstvaga", controller.lstvaga);
+router.post("/lstvaga", controller.pesquisavaga);
 
-router.get('/addpaciente', controller.abreaddpaciente)
-router.post('/addpaciente',controller.addpaciente)
+router.get("/edtvaga/:id", controller.abreedtvaga);
+router.post("/edtvaga/:id", controller.edtvaga);
 
-router.get('/lstpaciente',controller.lstpaciente)
-router.post('/lstpaciente',controller.pesquisapaciente)
+router.get("/delvaga/:id", controller.delvaga);
 
-router.get('/edtpaciente/:id', controller.abreedtpaciente)
-router.post('/edtpaciente/:id', controller.edtpaciente)
+router.get("/addeleicao", controller.abreaddeleicao);
+router.post("/addeleicao", controller.addeleicao);
 
-router.get('/delpaciente/:id', controller.delpaciente)
+router.get("/lsteleicao", controller.lsteleicao);
+router.post("/lsteleicao", controller.pesquisaeleicao);
 
-router.get('/addconsulta', controller.abreaddconsulta)
-router.post('/addconsulta',controller.addconsulta)
+router.get("/edteleicao/:id", controller.abreedteleicao);
+router.post("/edteleicao/:id", controller.edteleicao);
 
-router.get('/lstconsulta',controller.lstconsulta)
-router.post('/lstconsulta',controller.pesquisaconsulta)
+router.get("/deleleicao/:id", controller.deleleicao);
 
-router.get('/edtconsulta/:id', controller.abreedtconsulta)
-router.post('/edtconsulta/:id', controller.edtconsulta)
-
-router.get('/delconsulta/:id', controller.delconsulta)
-
-
-module.exports = router
+module.exports = router;
