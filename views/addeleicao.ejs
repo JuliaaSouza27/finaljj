@@ -1,4 +1,43 @@
 <%-include('cabecalho.ejs')%>
+<tittle>Adicionar Eleição<tittle>
+<style>
+        form {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #0f2f99;
+            width: 300px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="submit"] {
+            margin-bottom: 10px;
+            width: calc(100% - 12px);
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+    
+        input[type="submit"] {
+            background-color: #3c43a0;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+</style>
 <form method="post">
     <label for="eleicano">Ano da Eleição</label>
     <input type="number" name="eleicano" id="eleicano" required placeholder="Digite o ano Eleição."><br>

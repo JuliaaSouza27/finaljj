@@ -1,6 +1,7 @@
 const Eleitor = require("../models/Eleitor");
 const vaga = require("../models/vaga");
 const eleicao = require("../models/eleicao");
+const localvota = require("../models/localvota");
 
 function abreindex(req, res) {
   res.render("index");
@@ -27,17 +28,71 @@ function addeleitor(req, res) {
     datanasc: datanasc,
   });
 
-  eleitor.save().then(function (docs) {
-    res.send("Salvo");
+  eleitor.save().then(function (docs, err) {
+    console.log(docs);
+    res.redirect("/addeleitor");
   });
 }
 
 function listar(req, res) {
-  Eleitor.find({}).then(function (eleitores) {
-    res.render("lsteleitor.ejs", { Eleitores: eleitores });
+  Eleitor.find({}).then(function (eleitores, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("lsteleitor.ejs", { eleitores: eleitores });
+    }
   });
 }
 
+function pesquisaeleitor(req, res) {
+  Eleitor.find({ nome: new RegExp(req.body.pesquisar, "i") }).then(function (
+    eleitor,
+    err
+  ) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("lsteleitor.ejs", { eleitor: eleitor });
+    }
+  });
+}
+
+function abreedteleitor(req, res) {
+  Eleitor.findById(req.params.id).then(function (eleitor, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("edteleitor.ejs", { eleitor: eleitor });
+    }
+  });
+}
+
+function edteleitor(req, res) {
+  Eleitor.findByIdAndUpdate(req.params.id, {
+    nome: req.body.nome,
+    titulo: req.body.titulo,
+    cpf: req.body.cpf,
+    filiacao: req.body.filiacao,
+    end: req.body.end,
+    datanasc: req.body.datanasc,
+  }).then(function (eleitor, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.redirect("/lsteleitor");
+    }
+  });
+}
+
+function deleleitor(req, res) {
+  Eleitor.findByIdAndDelete(req.params.id).then(function (eleitor, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.redirect("/lsteleitor");
+    }
+  });
+}
 function abreaddvaga(req, res) {
   res.render("addvaga.ejs");
 }
@@ -194,11 +249,89 @@ function deleleicao(req, res) {
   });
 }
 
+function abreaddlocalvota(req, res) {
+  res.render("addlocalvota.ejs");
+}
+
+function addlocalvota(req, res) {
+  let l = new localvota({
+    secao: req.body.secao,
+    ende: req.body.ende,
+    zona: req.body.zona,
+  });
+  l.save().then(function (docs, err) {
+    console.log(docs);
+    res.redirect("/addlocalvota");
+  });
+}
+
+function lstlocalvota(req, res) {
+  localvota.find({}).then(function (localvota, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("lstlocalvota.ejs", { localvota: localvota });
+    }
+  });
+}
+
+function pesquisalocalvota(req, res) {
+  localvota
+    .find({ nome: new RegExp(req.body.pesquisar, "i") })
+    .then(function (localvota, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.render("lstlocalvota.ejs", { localvota: localvota });
+      }
+    });
+}
+
+function abreedtlocalvota(req, res) {
+  localvota.findById(req.params.id).then(function (localvota, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.render("edtlocalvota.ejs", { localvota: localvota });
+    }
+  });
+}
+
+function edtlocalvota(req, res) {
+  localvota
+    .findByIdAndUpdate(req.params.id, {
+      secao: req.body.secao,
+      ende: req.body.ende,
+      zona: req.body.zona,
+    })
+    .then(function (localvota, err) {
+      if (err) {
+        res.send(err.message);
+      } else {
+        res.redirect("/lstlocalvota");
+      }
+    });
+}
+
+function dellocalvota(req, res) {
+  localvota.findByIdAndDelete(req.params.id).then(function (localvota, err) {
+    if (err) {
+      res.send(err.message);
+    } else {
+      res.redirect("/lstlocalvota");
+    }
+  });
+}
+
 module.exports = {
   abreindex,
   abreeleitor,
   addeleitor,
   listar,
+  pesquisaeleitor,
+  abreedteleitor,
+  edteleitor,
+  deleleitor,
   abreaddvaga,
   addvaga,
   lstvaga,
@@ -213,4 +346,11 @@ module.exports = {
   deleleicao,
   abreedteleicao,
   edteleicao,
+  abreaddlocalvota,
+  addlocalvota,
+  lstlocalvota,
+  pesquisalocalvota,
+  dellocalvota,
+  abreedtlocalvota,
+  edtlocalvota,
 };

@@ -36,12 +36,16 @@
     }
 </style>
 
-
 <form method="post">
     <label for="id">Id</label>
-    <input type="number" name="id" id="id" required readonly value="<%=eleicao._id%>"><br>
-    <label for="eleicano">Ano da Eleição</label>
-    <input type="number" name="eleicano" id="eleicano" required placeholder="Digite o Ano da Eleição." value="<%=eleicao.eleicano%>"><br>
+    <input type="number" name="id" id="id" required readonly value="<%=localvota._id%>"><br>
+    <label for="secao">Seção</label>
+    <input type="number" name="secao" id="secao" required placeholder="Digite o Número da sua Seção." value="<%=localvota.secao%>"><br>
+    <label for="ende">Endereço de Votação</label>
+    <input type="text" name="ende" id="ende" required placeholder="Digite o Endereço de Votação"value="<%=localvota.ende%>"><br>
+    <label for="zona">Zona</label>
+    <input type="number" name="zona" id="zona" required placeholder="Digite a Sua Zona:"value="<%=localvota.zona%>"><br>
+   
     <input type="submit" value="Adicionar">
 </form>
 <%-include('rodape.ejs')%>

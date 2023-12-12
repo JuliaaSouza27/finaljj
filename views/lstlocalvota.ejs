@@ -1,5 +1,5 @@
 <%-include('cabecalho.ejs')%>
-<title>Listagem de Vagas</title>
+<title>Listagem de Locais de Votação</title>
   
    <style>
        body {
@@ -54,26 +54,20 @@
 
 <table>
     <tr>
-        <th>Número Vaga</th>
-        <th>Presidente</th>
-        <th>Governador</th>
-        <th>Senador</th>
-        <th>Deputado Federal </th>
-        <th>Deputado Estadual</th>
+        <th>Seção</th>
+        <th>Endereço de Votação</th>
+        <th>Zona</th>
         <th>Editar</th>
         <th>Delete</th>
     </tr>
 
-    <%vaga.forEach(function(vaga){%>
+    <%localvota.forEach(function(localvota){%>
     <tr>
-        <td><%=vaga.nmrvaga%></td>
-        <td><%=vaga.presidente%></td>
-        <td><%=vaga.governador%></td>
-        <td><%=vaga.senador%></td>
-        <td><%=vaga.depfed%></td>
-        <td><%=vaga.depestad%></td>
-        <td><a href="/edtvaga/<%=vaga._id%>">Editar</a></td>
-        <td><a href="/delvaga/<%=vaga._id%>">Delete</a></td>
+        <td><%=localvota.secao%></td>
+        <td><%=localvota.ende%></td>
+        <td><%=localvota.zona%></td>
+        <td><a href="/edtlocalvota/<%=localvota._id%>">Editar</a></td>
+        <td><a href="/dellocalvota/<%=localvota._id%>">Delete</a></td>
     </tr>
     <% }) %>
 </table>

@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Eleitores</title>
-</head>
-<body>
+
+<%-include('cabecalho.ejs')%>
+   <title>Listagem de Eleitores</title>
+  
+   <style>
+       body {
+           font-family: Arial, sans-serif;
+           margin: 20px;
+       }
+   
+       form {
+           width: 300px;
+           margin: 0 auto;
+           margin-bottom: 20px;
+       }
+   
+       input[type="text"],
+       input[type="submit"] {
+           margin-bottom: 10px;
+           width: calc(100% - 12px);
+           padding: 6px;
+           border: 1px solid #ccc;
+           border-radius: 3px;
+           box-sizing: border-box;
+       }
+   
+       input[type="submit"] {
+           background-color: #273086;
+           color: white;
+           cursor: pointer;
+       }
+   
+       table {
+           border-collapse: collapse;
+           width: 100%;
+           margin-bottom: 20px;
+       }
+   
+       th, td {
+           border: 1px solid black;
+           padding: 8px;
+           text-align: left;
+       }
+   
+       th {
+           background-color: #f2f2f2;
+       }
+   </style>
+    <form method="post">
+        <input type="text" name="pesquisar" id="pesquisar">
+        <input type="submit" value="Pesquisar">
+    </form>
     <table>
         <tr>
             <th>Nome</th>
@@ -18,7 +62,7 @@
 
         </tr>
 
-        <%Eleitores.forEach(function(eleitor){%>
+        <%eleitores.forEach(function(eleitor){%>
             <tr>
                 <td><%=eleitor.nome%></td>
                 <td><%=eleitor.titulo%></td>
@@ -26,7 +70,9 @@
                 <td><%=eleitor.filiacao%></td>
                 <td><%=eleitor.end%></td>
                 <td><%=eleitor.datanasc%></td>
-                <td><%=eleitor.localvota.secao%></td>
+                <td><a href="/edteleitor/<%=eleitor._id%>">Editar</a></td>
+                <td><a href="/deleleitor/<%=eleitor._id%>">Delete</a></td>
+               
             </tr>
         <% }) %>
     </table>

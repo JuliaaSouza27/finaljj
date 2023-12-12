@@ -1,11 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Eleitor</title>
-</head>
-<body>
+<%-include('cabecalho.ejs')%>
+<tittle>Adicionar Eleitor<tittle>
+    <style>
+            form {
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #0f2f99;
+                width: 300px;
+            }
+        
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+        
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            input[type="submit"] {
+                margin-bottom: 10px;
+                width: calc(100% - 12px);
+                padding: 6px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                box-sizing: border-box;
+            }
+        
+            input[type="submit"] {
+                background-color: #3c43a0;
+                color: white;
+                cursor: pointer;
+            }
+        </style>
+    
     <form method="post" enctype="multipart/form-data">
         <label for="nome">Nome</label>
         <input type="text" name="nome" id="nome" required placeholder="Digite seu nome."><br>
@@ -22,5 +51,4 @@
         
         <input type="submit" value="Adicionar">
     </form>
-</body>
-</html>
+    <%-include('rodape.ejs')%>

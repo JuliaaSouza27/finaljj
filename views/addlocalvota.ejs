@@ -1,5 +1,5 @@
 <%-include('cabecalho.ejs')%>
-<tittle>Adicionar Vaga <tittle>
+<tittle>Adicionar Local de Votação<tittle>
     <style>
             form {
                 margin: 20px;
@@ -35,18 +35,13 @@
             }
         </style>
 <form method="post">
-    <label for="nmrvaga">Número da Vaga</label>
-    <input type="number" name="nmrvaga" id="nmrvaga" required placeholder="Digite o Número da Vaga."><br>
-    <label for="presidente">Presidente</label>
-    <input type="number" name="presidente" id="presidente" required placeholder="Digite o número do presidente em que deseja votar:."><br>
-    <label for="governador">Governador</label>
-    <input type="number" name="governador" id="governador" required ="Digite o número do governador em que deseja votar:"><br>
-    <label for="senador">Senador</label>
-    <input type="number" name="senador" id="senador" required="Digite o número do Senador em que deseja votar:"><br>
-    <label for="depfed">Deputado Federal</label>
-    <input type="number" name="depfed" id="depfed" required="Digite o Número do Deputado Federal em que deseja votar:"><br>
-    <label for="depestad">Deputado Estadual</label>
-    <input type="number" name="depestad" id="depestad" required="Digite o Número do Deputado Estadual em que deseja votar:"><br>
+    <label for="secao">Seção</label>
+    <input type="number" name="secao" id="secao" required placeholder="Digite o Número da Sua Seção."><br>
+    <label for="ende">Endereço de Votação</label>
+    <input type="text" name="ende" id="ende" required placeholder="Digite o Endereço do seu Local de Votação."><br>
+    <label for="zona">Zona</label>
+    <input type="number" name="zona" id="zona" required ="Digite a sua Zona de Votação"><br>
+    
     <input type="submit" value="Adicionar">
 </form>
 <%-include('rodape.ejs')%>
