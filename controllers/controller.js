@@ -184,10 +184,10 @@ function abreaddeleicao(req, res) {
 }
 
 function addeleicao(req, res) {
-  let eleicao = new eleicao({
+  let Eleicao = new eleicao({
     eleicano: req.body.eleicano,
   });
-  eleicao.save().then(function (docs, err) {
+  Eleicao.save().then(function (docs, err) {
     console.log(docs);
     res.redirect("/addeleicao");
   });

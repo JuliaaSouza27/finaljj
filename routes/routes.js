@@ -18,6 +18,8 @@ router.post("/lsteleitor", controller.pesquisaeleitor);
 router.get("/edteleitor/:id", controller.abreedteleitor);
 router.post("/edteleitor/:id", controller.edteleitor);
 
+router.get("/deleleitor/:id", controller.deleleitor);
+
 router.get("/addvaga", controller.abreaddvaga);
 router.post("/addvaga", controller.addvaga);
 
